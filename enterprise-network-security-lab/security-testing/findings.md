@@ -47,7 +47,7 @@ Port-channel 1 displays an "SU" state indicating a Layer 2 EtherChannel is activ
 **Actual Result**
 EtherChannel formed successfully between SW1 and SW2.
 
-![EtherChannel Summary](enterprise-network-security-lab/security-testing/screenshots/etherchannel-summary.png)
+![EtherChannel Summary](screenshots/etherchannel-summary.png)
 
 **Security / Reliability Benefit**
 Provides redundancy and increased bandwidth while preventing single-link failures.
@@ -70,7 +70,7 @@ Routers establish FULL neighbor relationships.
 **Actual Result**
 OSPF adjacency successfully formed between routers.
 
-![OSPF Neighbors](enterprise-network-security-lab/security-testing/screenshots/ospf-neighbors.png)
+![OSPF Neighbors](screenshots/ospf-neighbors.png)
 
 **Benefit**
 Dynamic routing automatically exchanges network reachability information without requiring manual static routes.
@@ -137,7 +137,7 @@ Ping fails.
 **Actual Result**
 Access was denied as expected.
 
-![Guest VLAN Blocked from IT VLAN](enterprise-network-security-lab/security-testing/screenshots/acl-guest-blocked.png)
+![Guest VLAN Blocked from IT VLAN](screenshots/acl-guest-blocked.png)
 
 **Benefit**
 Protects sensitive internal systems from guest devices.
@@ -160,7 +160,7 @@ Ping succeeds.
 **Actual Result**
 Traffic successfully reached the simulated ISP.
 
-![Guest VLAN Internet Access Allowed](enterprise-network-security-lab/security-testing/screenshots/acl-guest-internet-allowed.png)
+![Guest VLAN Internet Access Allowed](screenshots/acl-guest-internet-allowed.png)
 
 **Benefit**
 Allows guest Internet access without exposing internal networks.
@@ -186,7 +186,7 @@ Violation counter increases and unauthorized traffic is restricted.
 **Actual Result**
 Port security detected the unauthorized MAC address and restricted traffic.
 
-![Port Security Violation](enterprise-network-security-lab/security-testing/screenshots/port-security-violation.png)
+![Port Security Violation](screenshots/port-security-violation.png)
 
 **Benefit**
 Prevents unauthorized devices from accessing the network.
@@ -208,9 +208,9 @@ Attempted Telnet followed by SSH.
 **Actual Result**
 Telnet connections were denied while SSH login succeeded using local credentials.
 
-![Telnet Refused]enterprise-network-security-lab/security-testing/(screenshots/telnet-refused.png)
+![Telnet Refused](screenshots/telnet-refused.png)
 
-![SSH Login Successful](enterprise-network-security-lab/security-testing/screenshots/ssh-success.png)
+![SSH Login Successful](screenshots/ssh-success.png)
 
 **Benefit**
 Encrypted remote management protects administrator credentials from interception.
