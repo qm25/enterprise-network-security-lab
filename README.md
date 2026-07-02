@@ -18,7 +18,7 @@ Built as a personal project applying CCNA-level networking concepts (all three C
 
 ## Topology
 
-![Network Topology](topology/topology-diagram.png)
+![Network Topology](topology/Topology.png)
 
 | Site | Devices | Purpose |
 |---|---|---|
