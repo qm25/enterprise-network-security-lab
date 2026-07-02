@@ -47,7 +47,7 @@ Port-channel 1 displays an "SU" state indicating a Layer 2 EtherChannel is activ
 **Actual Result**
 EtherChannel formed successfully between SW1 and SW2.
 
-![EtherChannel Summary](screenshots/etherchannel-summary.png)
+![EtherChannel Summary](enterprise-network-security-lab/security-testing/screenshots/etherchannel-summary.png)
 
 **Security / Reliability Benefit**
 Provides redundancy and increased bandwidth while preventing single-link failures.
