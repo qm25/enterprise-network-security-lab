@@ -26,7 +26,7 @@ Built as a personal project applying CCNA-level networking concepts (all three C
 | Branch | R2, SW3 (access), PC5–PC6 | Single flat LAN |
 | ISP (simulated) | R0 | Provides WAN transit + OSPF backbone between sites |
 
-Full IP addressing and VLAN plan: [`docs/ip-addressing-table.md`](docs/ip-addressing-table.md) and [`docs/vlan-design.md`](docs/vlan-design.md)
+Full IP addressing and VLAN plan: [`docs/ip-addressing-table.md`](enterprise-network-security-lab/docs/ip-addressing-table.md) and [`docs/vlan-design.md`](enterprise-network-security-lab/docs/vlan-design.md)
 
 ## Security Testing & Findings
 
@@ -39,7 +39,7 @@ Rather than just listing configured features, each control was actively tested t
 | Port security | Connecting an unauthorized device to a secured access port | **Violation triggered** — port restricts traffic from the new MAC, logged via `show port-security` |
 | Remote access hardening | Attempting Telnet vs SSH to a router | **Telnet refused, SSH accepted** — confirms VTY lines are SSH-only |
 
-Full write-up with screenshots: [`security-testing/findings.md`](security-testing/findings.md)
+Full write-up with screenshots: [`security-testing/findings.md`](enterprise-network-security-lab/security-testing/findings.md)
 
 ## Repository Structure
 ```
