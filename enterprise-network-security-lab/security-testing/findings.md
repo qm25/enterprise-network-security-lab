@@ -1,258 +1,223 @@
 # Security Testing Report
 
 ## Overview
-
 This document summarizes the verification and security validation performed after implementing the enterprise network.
 
 The purpose of these tests is to ensure that routing, switching, security controls, and management configurations operate as intended.
 
 ---
 
-# Test 1 — VLAN Verification
+## Test 1 — VLAN Verification
 
-## Objective
-
+**Objective**
 Verify that all required VLANs were successfully created and assigned.
 
-## Command
-
+**Command**
 ```
 show vlan brief
 ```
 
-## Expected Result
-
+**Expected Result**
 - VLAN 10 present
 - VLAN 20 present
 - VLAN 30 present
 - VLAN 99 present
 
-## Actual Result
-
+**Actual Result**
 All VLANs were successfully created and operational.
 
-## Security Benefit
-
+**Security Benefit**
 Network segmentation reduces broadcast domains and separates users based on organizational roles.
 
 ---
 
-# Test 2 — EtherChannel Verification
+## Test 2 — EtherChannel Verification
 
-## Objective
-
+**Objective**
 Verify that LACP EtherChannel is operational.
 
-## Command
-
+**Command**
 ```
 show etherchannel summary
 ```
 
-## Expected Result
-
+**Expected Result**
 Port-channel 1 displays an "SU" state indicating a Layer 2 EtherChannel is active.
 
-## Actual Result
-
+**Actual Result**
 EtherChannel formed successfully between SW1 and SW2.
 
-## Security / Reliability Benefit
+![EtherChannel Summary](screenshots/etherchannel-summary.png)
 
+**Security / Reliability Benefit**
 Provides redundancy and increased bandwidth while preventing single-link failures.
 
 ---
 
-# Test 3 — OSPF Neighbor Verification
+## Test 3 — OSPF Neighbor Verification
 
-## Objective
-
+**Objective**
 Verify dynamic routing adjacency.
 
-## Command
-
+**Command**
 ```
 show ip ospf neighbor
 ```
 
-## Expected Result
-
+**Expected Result**
 Routers establish FULL neighbor relationships.
 
-## Actual Result
-
+**Actual Result**
 OSPF adjacency successfully formed between routers.
 
-## Benefit
+![OSPF Neighbors](screenshots/ospf-neighbors.png)
 
+**Benefit**
 Dynamic routing automatically exchanges network reachability information without requiring manual static routes.
 
 ---
 
-# Test 4 — DHCP Verification
+## Test 4 — DHCP Verification
 
-## Objective
-
+**Objective**
 Verify automatic IP address assignment.
 
-## Procedure
-
+**Procedure**
 Configured each PC to obtain an address using DHCP.
 
-## Expected Result
-
+**Expected Result**
 Each device receives an address from the appropriate subnet.
 
-## Actual Result
-
+**Actual Result**
 All workstations successfully received valid IP configurations.
 
-## Benefit
-
+**Benefit**
 Centralized address management reduces configuration errors.
 
 ---
 
-# Test 5 — NAT Verification
+## Test 5 — NAT Verification
 
-## Objective
-
+**Objective**
 Verify internal addresses are translated before leaving the enterprise network.
 
-## Command
-
+**Command**
 ```
 show ip nat translations
 ```
 
-## Procedure
-
+**Procedure**
 Generated traffic by pinging the simulated ISP router.
 
-## Expected Result
-
+**Expected Result**
 Translation entries appear.
 
-## Actual Result
-
+**Actual Result**
 NAT overload translated private addresses successfully.
 
-## Benefit
-
+**Benefit**
 Allows multiple internal hosts to share public address space.
 
 ---
 
-# Test 6 — Guest VLAN ACL
+## Test 6 — Guest VLAN ACL
 
-## Objective
-
+**Objective**
 Verify Guest users cannot access internal IT resources.
 
-## Procedure
-
+**Procedure**
 From a Guest VLAN workstation:
-
 ```
 ping 192.168.20.x
 ```
 
-## Expected Result
-
+**Expected Result**
 Ping fails.
 
-## Actual Result
-
+**Actual Result**
 Access was denied as expected.
 
-## Benefit
+![Guest VLAN Blocked from IT VLAN](screenshots/acl-guest-blocked.png)
 
+**Benefit**
 Protects sensitive internal systems from guest devices.
 
 ---
 
-# Test 7 — Guest Internet Access
+## Test 7 — Guest Internet Access
 
-## Objective
-
+**Objective**
 Verify Guest users still have external connectivity.
 
-## Procedure
-
+**Procedure**
 ```
 ping 10.10.10.1
 ```
 
-## Expected Result
-
+**Expected Result**
 Ping succeeds.
 
-## Actual Result
-
+**Actual Result**
 Traffic successfully reached the simulated ISP.
 
-## Benefit
+![Guest VLAN Internet Access Allowed](screenshots/acl-guest-internet-allowed.png)
 
+**Benefit**
 Allows guest Internet access without exposing internal networks.
 
 ---
 
-# Test 8 — Port Security
+## Test 8 — Port Security
 
-## Objective
-
+**Objective**
 Verify unauthorized devices cannot use protected switch ports.
 
-## Procedure
-
+**Procedure**
 A different workstation was connected to a secured access port.
 
-## Command
-
+**Command**
 ```
 show port-security interface fastEthernet0/1
 ```
 
-## Expected Result
-
+**Expected Result**
 Violation counter increases and unauthorized traffic is restricted.
 
-## Actual Result
-
+**Actual Result**
 Port security detected the unauthorized MAC address and restricted traffic.
 
-## Benefit
+![Port Security Violation](screenshots/port-security-violation.png)
 
+**Benefit**
 Prevents unauthorized devices from accessing the network.
 
 ---
 
-# Test 9 — SSH Verification
+## Test 9 — SSH Verification
 
-## Objective
-
+**Objective**
 Verify secure remote administration.
 
-## Procedure
-
+**Procedure**
 Attempted Telnet followed by SSH.
 
-## Expected Result
-
+**Expected Result**
 - Telnet refused
 - SSH successful
 
-## Actual Result
-
+**Actual Result**
 Telnet connections were denied while SSH login succeeded using local credentials.
 
-## Benefit
+![Telnet Refused](screenshots/telnet-refused.png)
 
+![SSH Login Successful](screenshots/ssh-success.png)
+
+**Benefit**
 Encrypted remote management protects administrator credentials from interception.
 
 ---
 
-# Overall Assessment
+## Overall Assessment
 
 All planned network services and security mechanisms operated successfully.
 
