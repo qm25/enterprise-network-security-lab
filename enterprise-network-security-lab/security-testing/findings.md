@@ -1,6 +1,6 @@
 # Security Testing — Findings
 
-Each control below was configured, then actively tested from the affected devices to confirm it behaves as intended, rather than assumed to work simply because it was configured. Screenshots referenced are in `security-testing/screenshots/`.
+Each control below was configured, then actively tested from the affected devices to confirm it behaves as intended, rather than assumed to work simply because it was configured. Screenshots are in `security-testing/screenshots/`.
 
 ---
 
@@ -14,9 +14,13 @@ ping 192.168.20.11
 ping 10.10.10.1
 ```
 
-**Result:**
-- Ping to the IT VLAN host: **failed** (Request timed out) — see `screenshots/acl-guest-blocked.png`
-- Ping to the simulated internet (R0): **succeeded** — see `screenshots/acl-guest-internet-allowed.png`
+**Result — Guest → IT (blocked):**
+
+![Guest to IT ping blocked](screenshots/acl-guest-blocked.png)
+
+**Result — Guest → Internet (allowed):**
+
+![Guest to internet ping allowed](screenshots/acl-guest-internet-allowed.png)
 
 **Why it matters:** This confirms the extended ACL on R1 (`GUEST_RESTRICT`) is selectively blocking traffic — Guest devices aren't fully sandboxed, they still get functional internet access, but cannot pivot into the IT segment. Without this control, any device connecting to the Guest network (including untrusted visitor devices) would have a direct path into internal IT systems.
 
@@ -31,7 +35,11 @@ ping 10.10.10.1
 show port-security interface fastEthernet 0/1
 ```
 
-**Result:** After disconnecting the authorized device and connecting a different device to the same port, the security violation counter incremented and traffic from the new MAC address was restricted rather than forwarded — see `screenshots/port-security-violation.png`.
+**Result:**
+
+![Port security violation triggered](screenshots/port-security-violation.png)
+
+After disconnecting the authorized device and connecting a different device to the same port, the security violation counter incremented and traffic from the new MAC address was restricted rather than forwarded.
 
 **Why it matters:** Port security prevents a common physical-access attack: someone unplugging a legitimate device and plugging in their own laptop to gain network access from a trusted switchport. Without this control, physical access to an office jack would be equivalent to full network access.
 
@@ -47,9 +55,13 @@ telnet 192.168.10.1
 ssh -l admin 192.168.10.1
 ```
 
-**Result:**
-- Telnet attempt: **refused** — see `screenshots/telnet-refused.png`
-- SSH attempt: **succeeded**, prompted for credentials, logged in cleanly — see `screenshots/ssh-success.png`
+**Result — Telnet refused:**
+
+![Telnet connection refused](screenshots/telnet-refused.png)
+
+**Result — SSH successful:**
+
+![SSH login successful](screenshots/ssh-success.png)
 
 **Why it matters:** Telnet sends credentials and session data in plaintext, making it trivial to intercept on a shared network segment. Restricting VTY lines to SSH-only (`transport input ssh`) ensures management traffic is encrypted, closing off a common and historically well-exploited attack vector against network infrastructure.
 
@@ -65,9 +77,13 @@ show ip ospf neighbor          (on R1)
 show etherchannel summary      (on SW1)
 ```
 
-**Result:**
-- R1 shows R0 as a FULL OSPF neighbor — see `screenshots/ospf-neighbors.png`
-- SW1's Port-channel1 shows both member links in an active "SU" (in use) state — see `screenshots/etherchannel-summary.png`
+**Result — OSPF neighbor formed:**
+
+![OSPF neighbor state](screenshots/ospf-neighbors.png)
+
+**Result — EtherChannel active:**
+
+![EtherChannel summary](screenshots/etherchannel-summary.png)
 
 **Why it matters:** These aren't security controls, but they validate that the underlying network is actually functioning as designed — dynamic routing is converging correctly, and the switch-to-switch link has redundancy (if one physical link in the EtherChannel fails, traffic continues over the other without a full outage).
 
