@@ -32,7 +32,7 @@ ping 10.10.10.1
 
 **Commands used (on SW2):**
 ```
-show port-security interface fastEthernet 0/1
+show mac address-table interface fastEthernet 0/1
 ```
 
 **Result:**
